@@ -44,7 +44,8 @@ module.exports = function(grunt) {
         files: [
           {expand: false, src: ['src/index.html'], dest: 'dist/', filter: 'isFile'},
           {expand: false, src: ['src/data/*'], dest: 'dist/', filter: 'isFile', flatten: true},
-          {expand: false, src: ['src/img/*'], dest: 'dist/', filter: 'isFile', flatten: true}
+          {expand: false, src: ['src/img/*'], dest: 'dist/', filter: 'isFile', flatten: true},
+          {expand: false, src: ['src/libs/*'], dest: 'dist/', filter: 'isFile', flatten: true}
         ]
       },
       docsZip: {
@@ -56,12 +57,12 @@ module.exports = function(grunt) {
         files: [
           {expand:true, cwd:'<%= docsFolder %>', src:'**', dest:getConfigValue('docs_out_path')}
         ]
-      },
+      }/*,
       src: {
         files: [
-          {expand: true, cwd:'dist/', src: '*.js', dest: 'dist/lib/'}
+          {expand: true, cwd:'dist/', src: '*.js', dest: 'dist/src/js/libs/'}
         ]
-      }
+      }*/
     },
     concat: {
       options: {
@@ -71,11 +72,11 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'dist/<%= pkg.name.toLowerCase() %>-<%= version %>.combined.js': getCombinedSource()
+          'dist/src/libs/easeljs-<%= version %>.combined.js': getCombinedSource()
         }
       },
       dist: {
-        src: ['src/libs/jquery.js','src/libs/underscore-min.js','src/libs/backbone-min.js','src/libs/pathfinding-browser.js','src/libs/easeljs-0.7.0.min.js','src/utils/*.js','src/models/*.js','src/views/*.js','src/main.js'],
+        src: ['src/utils/*.js','src/models/*.js','src/views/*.js','src/main.js'],
         dest: 'dist/src/js/<%= pkg.name %>.js'
       },
     },
@@ -97,7 +98,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/src/js/libs.min.js'
+        dest: 'dist/src/js/<%= pkg.name %>.min.js'
       },
     },
     // Build docs using yuidoc
@@ -287,7 +288,7 @@ module.exports = function(grunt) {
    *
    */
   grunt.registerTask('coreBuild', [
-    "updateversion", "uglify", "docs", "copy:src"
+    "updateversion", "uglify", "docs" //, "copy:src"
   ]);
 
   /**
@@ -298,6 +299,6 @@ module.exports = function(grunt) {
     "concat"
   ]);
 
-  grunt.registerTask('default', ['clean', 'copy', 'concat', 'uglify', 'coreBuild']);
+  grunt.registerTask('default', ['clean', 'concat', 'coreBuild', 'copy']);
 
 };

@@ -5,6 +5,6 @@ var TileModel = Backbone.Model.extend({
     x : 0,
     y : 0,
     walkable : true,
-    img : null
+    spriteSheet : null
   }
 });

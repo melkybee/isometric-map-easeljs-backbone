@@ -16,8 +16,10 @@ var MapView = Backbone.View.extend({
   initialize : function(){
     this.render();
 
-    this.grid = new PF.Grid(4,4);
-    this.grid.setWalkableAt(2,2,false);
+    this.grid = new PF.Grid(7,7);
+    this.grid.setWalkableAt(2,3,false);
+    this.grid.setWalkableAt(4,2,false);
+    this.grid.setWalkableAt(4,3,false);
     this.finder = new PF.AStarFinder();
   },
 
@@ -70,34 +72,35 @@ var MapView = Backbone.View.extend({
   /**
    * Create tile map
    */
-  createTileMap : function(context, img, x, y, regX, regY, data) {
+  createTileMap : function(context, spriteSheet, x, y, regX, regY, data) {
     var tile,
-        bmp,
+        sprite,
         i,
         j;
 
     context.tileMap = [];
     //console.log('createTileMap');
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 7; i++) {
       context.tileMap[i] = [];
-      for (j = 0; j < 4; j++) {
-        bmp = new createjs.Sprite(img);
-        bmp.x = (j-i) * x + 350;  // 65 comes from gridWidth/2
-        bmp.y = (i+j) * y + 250;  // 32.5 comes from gridHeight/2
-        bmp.regX = regX;
-        bmp.regY = regY;
-        bmp.row = i;  // add row property
-        bmp.column = j;  // add column property
-        bmp.gotoAndStop(data[i][j]);
-        context.stage.addChild(bmp);
+      for (j = 0; j < 7; j++) {
+        sprite = new createjs.Sprite(spriteSheet);
+        sprite.x = (j-i) * x + 540;  // ~ gridWidth/2
+        sprite.y = (i+j) * y + 220;  // ~ gridHeight/2
+        sprite.regX = regX;
+        sprite.regY = regY;
+        sprite.row = i;  // add row property
+        sprite.column = j;  // add column property
+        sprite.gotoAndStop(data[i][j]);
 
-        //console.log('currentFrame = ' + bmp.currentFrame);
-        //console.log('x = ' + bmp.x + ' , y = ' + bmp.y + ' , regX = ' + regX + ' , regY = ' + regY);
+        //console.log('currentFrame = ' + sprite.currentFrame);
+        //console.log('x = ' + sprite.x + ' , y = ' + sprite.y + ' , regX = ' + regX + ' , regY = ' + regY);
 
-        tile = new TileModel({column:i, row:j, x:bmp.x, y:bmp.y, img:bmp});
+        tile = new TileModel({column:i, row:j, x:sprite.x, y:sprite.y, spriteSheet:sprite});
         context.tileMap[i][j] = tile;
 
-        bmp.on('click', function(event) {
+        context.stage.addChild(sprite);
+
+        sprite.on('click', function(event) {
           if (Main.gameMode === 'MODE_MAP') {
             //console.log('new = ' + event.target.row + ' , ' + event.target.column);
             //console.log(context.playerModel.get('row') + ' , ' + context.playerModel.get('column'));
@@ -226,6 +229,17 @@ var MapView = Backbone.View.extend({
         context.path.splice(0,1);
         //console.log('after removal = ' + context.path);
         if (context.path.length > 0) {
+          // depth sorting
+          if (context.player.y > context.enemy.y) {
+            if (context.stage.getChildIndex(context.player) < context.stage.getChildIndex(context.enemy)) {
+              context.stage.swapChildren(context.player, context.enemy);
+            }
+          } else if (context.player.y < context.enemy.y) {
+            if (context.stage.getChildIndex(context.player) > context.stage.getChildIndex(context.enemy)) {
+              context.stage.swapChildren(context.player, context.enemy);
+            }
+          }
+          // move player to tile
           context.movePlayerToTile(context, context.path[0]);
         } else {
           context.model.set('movePlayer', false);
@@ -275,7 +289,6 @@ var MapView = Backbone.View.extend({
 
       context.stage.update();
 
-      //Main.ticker();
       Main.init();
       context.trigger('EVENT_MAP_LOADED');
     });

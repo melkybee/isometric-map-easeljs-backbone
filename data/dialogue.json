@@ -1,0 +1,107 @@
+{
+    "smallTalk": [
+        {
+            "food": {
+                "nodes": [
+                    {
+                        "id": "0",
+                        "parentId": null,
+                        "text": "Are you hungry?",
+                        "rules": null,
+                        "events": null,
+                        "branches": [
+                            {
+                                "id": "1",
+                                "parentId": "0",
+                                "text": "Not at all.",
+                                "rules": null,
+                                "events": null
+                            },
+                            {
+                                "id": "2",
+                                "parentId": "0",
+                                "text": "Very!",
+                                "rules": null,
+                                "events": [
+                                    {
+                                        "updatePoints": 2
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "3",
+                        "parentId": "1",
+                        "text": "Oh, bummer",
+                        "rules": null,
+                        "events": null
+                    },
+                    {
+                        "id": "4",
+                        "parentId": "2",
+                        "text": "Me too! We should eat somewhere!",
+                        "rules": null,
+                        "events": null,
+                        "branches": [
+                            {
+                                "id": "5",
+                                "parentId": "4",
+                                "text": "How bout at the new burger joint down the street?",
+                                "rules": null,
+                                "events": [
+                                    {
+                                        "updatePoints": 8
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "6",
+                                "parentId": "4",
+                                "text": "Sushi?",
+                                "rules": null,
+                                "events": [
+                                    {
+                                        "updatePoints": -4
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "7",
+                                "parentId": "4",
+                                "text": "Let's eat salad!",
+                                "rules": null,
+                                "events": [
+                                    {
+                                        "updatePoints": -6
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "8",
+                        "parentId": "5",
+                        "text": "That seems exciting! Let's go!",
+                        "rules": null,
+                        "events": null
+                    },
+                    {
+                        "id": "9",
+                        "parentId": "6",
+                        "text": "Hrmmm. Not a fan of raw fish.",
+                        "rules": null,
+                        "events": null
+                    },
+                    {
+                        "id": "10",
+                        "parentId": "7",
+                        "text": "You're kidding, right?",
+                        "rules": null,
+                        "events": null
+                    }
+                ]
+            }
+        }
+    ]
+}

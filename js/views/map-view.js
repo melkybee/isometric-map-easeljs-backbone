@@ -126,8 +126,12 @@ var MapView = Backbone.View.extend({
   },
 
   movePlayerToTile : function(context, array) {
-    var row = array[0],
-        column = array[1];
+    var row, column;
+
+    if (!array) { return; }
+
+    row = array[0];
+    column = array[1];
     //console.log('array = ' + array);
     //console.log(context.tileMap[row][column]);
     context.playerModel.set('destRow', row);

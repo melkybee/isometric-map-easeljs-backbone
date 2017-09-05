@@ -1,24 +1,12 @@
 {
-  "name": "isometric-sim-game",
-  "title": "isometric-sim-game",
-  "description": "Isometric Sim Game",
+  "name": "isometric-map-easeljs-backbone",
+  "title": "isometric-map-easeljs-backbone",
+  "description": "Isometric Map EaselJS Backbone",
   "version": "0.1.0",
-  "homepage": "",
   "author": {
-    "name": "Melissa Viernes",
-    "email": "mbolosan@gmail.com"
+    "name": "Melissa B. Viernes",
+    "email": "melissa.b.viernes@gmail.com"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://melkybee@bitbucket.org/melkybee/isometric-sim-game.git"
-  },
-  "bugs": "",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "/blob/master/LICENSE-MIT"
-    }
-  ],
   "scripts": {
     "test": "grunt qunit"
   },
@@ -38,6 +26,5 @@
   "dependencies": {
     "jquery": "*"
   },
-  "keywords": [],
   "engine": "node >= 0.10.2"
 }

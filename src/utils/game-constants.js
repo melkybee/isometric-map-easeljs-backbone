@@ -1,3 +1,0 @@
-GameConstants = {
-  EVENT_MAP_REACHED_ENEMY : 'EVENT_MAP_REACHED_ENEMY'
-};

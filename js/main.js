@@ -16,8 +16,7 @@ var Main = (function($){
   };
 
   var onReachedEnemy = function() {
-    alert('BAAAAAHTTLE MODE!');
-    Main.gameMode = 'MODE_BATTLE';
+ //   Main.gameMode = 'MODE_BATTLE';
   };
 
   var ticker = function() {

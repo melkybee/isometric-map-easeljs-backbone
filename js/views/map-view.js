@@ -278,7 +278,7 @@ var MapView = Backbone.View.extend({
           //image to use
           images: [img],
           //width, height & registration point of each sprite
-          frames: { width: 133, height: 89, regX: 65, regY: 32.5 }
+          frames: { width: 133, height: 89, regX: 66, regY: 45 }
       });
 
       context.enemy = new createjs.Sprite(spriteSheet);
@@ -286,8 +286,8 @@ var MapView = Backbone.View.extend({
       context.enemy.y = originTile.get('y');
 
       context.enemyModel = new EnemyModel({x:context.enemy.x, y:context.enemy.y, row: originTile.get('row'), column: originTile.get('column') });
-      context.enemy.regX = 32.5;
-      context.enemy.regY = 16.25;
+      context.enemy.regX = 45;
+      context.enemy.regY = 45;
       context.enemy.currentFrame = 0;
       context.stage.addChild(context.enemy);
 

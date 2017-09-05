@@ -288,6 +288,6 @@ module.exports = function(grunt) {
   /**
    * Default task.
    */
-  grunt.registerTask('default', ['clean', 'concat', 'coreBuild', 'copy']);
+  grunt.registerTask('default', ['clean', 'concat', 'copy']);
 
 };

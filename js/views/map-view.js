@@ -81,25 +81,29 @@ var MapView = Backbone.View.extend({
     for (i = 0; i < 4; i++) {
       context.tileMap[i] = [];
       for (j = 0; j < 4; j++) {
-        bmp = new createjs.BitmapAnimation(img);
+        bmp = new createjs.Sprite(img);
         bmp.x = (j-i) * x + 350;  // 65 comes from gridWidth/2
         bmp.y = (i+j) * y + 250;  // 32.5 comes from gridHeight/2
         bmp.regX = regX;
         bmp.regY = regY;
         bmp.row = i;  // add row property
         bmp.column = j;  // add column property
-        bmp.currentFrame = data[i][j];
+        bmp.gotoAndStop(data[i][j]);
         context.stage.addChild(bmp);
+
+        //console.log('currentFrame = ' + bmp.currentFrame);
+        //console.log('x = ' + bmp.x + ' , y = ' + bmp.y + ' , regX = ' + regX + ' , regY = ' + regY);
 
         tile = new TileModel({column:i, row:j, x:bmp.x, y:bmp.y, img:bmp});
         context.tileMap[i][j] = tile;
 
-        bmp.onClick = function(event) {
+        bmp.on('click', function(event) {
           if (Main.gameMode === 'MODE_MAP') {
+            //console.log('new = ' + event.target.row + ' , ' + event.target.column);
             //console.log(context.playerModel.get('row') + ' , ' + context.playerModel.get('column'));
             context.path = context.createPath(context, context.playerModel.get('row'), context.playerModel.get('column'), event.target.row, event.target.column, context.grid);
           }
-        }
+        });
       }
     }
     //console.log('tileMap = ' + context.tileMap);
@@ -112,7 +116,7 @@ var MapView = Backbone.View.extend({
     var gridClone = grid.clone(),
         path = context.finder.findPath(playerRow, playerColumn, destinationRow, destinationColumn, gridClone);
     //console.log('path = ' + path);
-    //console.log('path[0] = ' + context.path[0]);
+    //console.log('path[0] = ' + path[0]);
     context.movePlayerToTile(context, path[0]);
 
     return path;
@@ -153,14 +157,14 @@ var MapView = Backbone.View.extend({
           frames: { width: 102, height: 195, regX: 32.5, regY: 16.25 }
       });
 
-      context.player = new createjs.BitmapAnimation(spriteSheet);
+      context.player = new createjs.Sprite(spriteSheet);
       context.player.x = originTile.get('x');
       context.player.y = originTile.get('y');
 
       context.playerModel = new PlayerModel({x:context.player.x, y:context.player.y, row: originTile.get('row'), column: originTile.get('column') });
       context.player.regX = 75;
       context.player.regY = 200;
-      context.player.currentFrame = 0;
+      context.player.gotoAndStop(0);
       context.stage.addChild(context.player);
 
       context.stage.update();
@@ -202,13 +206,13 @@ var MapView = Backbone.View.extend({
     }
 
     if ( row < destRow && column === destColumn ) {
-      context.player.currentFrame = 0;
+      context.player.gotoAndStop(0);
     } else if ( row > destRow && column === destColumn ) {
-      context.player.currentFrame = 2;
+      context.player.gotoAndStop(2);
     } else if ( row === destRow && column < destColumn ) {
-      context.player.currentFrame = 3;
+      context.player.gotoAndStop(3);
     } else if ( row === destRow && column > destColumn ) {
-      context.player.currentFrame = 1;
+      context.player.gotoAndStop(1);
     }
 
     if ( (playerX === destX) && (playerY === destY) ) {
@@ -259,7 +263,7 @@ var MapView = Backbone.View.extend({
           frames: { width: 152, height: 156, regX: 0, regY: 0 }
       });
 
-      context.enemy = new createjs.BitmapAnimation(spriteSheet);
+      context.enemy = new createjs.Sprite(spriteSheet);
       context.enemy.x = originTile.get('x');
       context.enemy.y = originTile.get('y');
 

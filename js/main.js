@@ -5,13 +5,13 @@ var Main = (function($){
       gameMode = 'MODE_MAP';
 
   var init = function() {
-    console.log('init');
+    // console.log('init');
     mapView.on('EVENT_MAP_LOADED', Main.onLoaded);
     mapView.on('EVENT_MAP_REACHED_ENEMY', Main.onReachedEnemy);
   };
 
   var onLoaded = function() {
-    console.log('on loaded');
+    // console.log('on loaded');
     Main.ticker();
   };
 
@@ -23,10 +23,10 @@ var Main = (function($){
   var ticker = function() {
     createjs.Ticker.setFPS(40);
     createjs.Ticker.useRAF = true;
-    createjs.Ticker.addListener(Main);  // look for "tick" function in Main
+    createjs.Ticker.addEventListener('tick', handleTick);
   };
 
-  var tick = function(dt, paused) {
+  var handleTick = function(event) {
     switch(gameMode) {
       case 'MODE_MAP':
         if (mapModel.get('movePlayer') === true) {
@@ -44,8 +44,7 @@ var Main = (function($){
     init : init,
     onLoaded : onLoaded,
     onReachedEnemy : onReachedEnemy,
-    ticker : ticker,
-    tick : tick
+    ticker : ticker
   };
 
 })(jQuery);

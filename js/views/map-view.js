@@ -49,7 +49,7 @@ var MapView = Backbone.View.extend({
    * Load map data
    */
   loadMapData : function(context, img) {
-    $.getJSON('data/game-map.json', function(data) {
+    $.getJSON('data/map.json', function(data) {
       context.mapData = data['main'];
       context.createSpriteSheet(context, img, context.mapData);
     });
@@ -278,7 +278,7 @@ var MapView = Backbone.View.extend({
           //image to use
           images: [img],
           //width, height & registration point of each sprite
-          frames: { width: 152, height: 156, regX: 0, regY: 0 }
+          frames: { width: 133, height: 89, regX: 65, regY: 32.5 }
       });
 
       context.enemy = new createjs.Sprite(spriteSheet);
@@ -286,8 +286,8 @@ var MapView = Backbone.View.extend({
       context.enemy.y = originTile.get('y');
 
       context.enemyModel = new EnemyModel({x:context.enemy.x, y:context.enemy.y, row: originTile.get('row'), column: originTile.get('column') });
-      context.enemy.regX = 110;
-      context.enemy.regY = 174;
+      context.enemy.regX = 32.5;
+      context.enemy.regY = 16.25;
       context.enemy.currentFrame = 0;
       context.stage.addChild(context.enemy);
 

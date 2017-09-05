@@ -1,0 +1,26 @@
+{
+  "name": "isometric-sim-game",
+  "title": "isometric-sim-game",
+  "description": "Isometric Sim Game",
+  "version": "0.1.0",
+  "homepage": "",
+  "author": {
+    "name": "Melissa Viernes",
+    "email": "mbolosan@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://melkybee@bitbucket.org/melkybee/isometric-sim-game.git"
+  },
+  "bugs": "",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}

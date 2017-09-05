@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     // EaselJS - Setup doc names / paths.
     docsName: '<%= pkg.name %>_docs-<%= version %>',
     //docsZip: "<%= docsName %>.zip",
-    docsFolder: "./output/<%= docsName %>/",
+    docsFolder: "dist/<%= docsName %>/",
 
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       build: {
         options: {
           mode:'zip',
-          archive:'output/<%= docsZip %>'
+          archive:'dist/<%= docsZip %>'
         },
         files: [
           {expand:true, src:'**', cwd:'<%= docsFolder %>'}
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
       },
       docsZip: {
         files: [
-          {expand: true, cwd:'output/', src:'<%= docsZip %>', dest:'../docs/'}
+          {expand: true, cwd:'dist/', src:'<%= docsZip %>', dest:'dist/docs/'}
         ]
       },
       docsSite: {
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
       },
       src: {
         files: [
-          {expand: true, cwd:'./output/', src: '*.js', dest: '../lib/'}
+          {expand: true, cwd:'dist/', src: '*.js', dest: 'dist/lib/'}
         ]
       }
     },
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'output/<%= pkg.name.toLowerCase() %>-<%= version %>.combined.js': getCombinedSource()
+          'dist/<%= pkg.name.toLowerCase() %>-<%= version %>.combined.js': getCombinedSource()
         }
       },
       dist: {
@@ -91,13 +91,13 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'output/<%= pkg.name.toLowerCase() %>-<%= version %>.min.js': getConfigValue('easel_source'),
-          'output/movieclip-<%= version %>.min.js': getConfigValue('movieclip_source')
+          'src/<%= pkg.name.toLowerCase() %>-<%= version %>.min.js': getConfigValue('easel_source'),
+          'src/movieclip-<%= version %>.min.js': getConfigValue('movieclip_source')
         }
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/src/js/<%= pkg.name %>.min.js'
+        dest: 'dist/src/js/libs.min.js'
       },
     },
     // Build docs using yuidoc
@@ -109,7 +109,7 @@ module.exports = function(grunt) {
         url: '<%= pkg.url %>',
         logo: '<%= pkg.logo %>',
         options: {
-          paths: ['../src/'],
+          paths: ['dist/src/'],
           outdir: '<%= docsFolder %>',
           linkNatives: true,
           attributesEmit: true,
@@ -170,9 +170,9 @@ module.exports = function(grunt) {
 
   function getHubTasks() {
     var arr = [
-      getConfigValue('preload_path')+'build/Gruntfile.js',
-      getConfigValue('tween_path')+'build/Gruntfile.js',
-      getConfigValue('sound_path')+'build/Gruntfile.js'
+      getConfigValue('preload_path')+'Gruntfile.js',
+      getConfigValue('tween_path')+'Gruntfile.js',
+      getConfigValue('sound_path')+'Gruntfile.js'
     ];
     return arr;
   }
@@ -251,7 +251,6 @@ module.exports = function(grunt) {
 
   // Default task.
   //grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
-  grunt.registerTask('default', ['clean', 'copy', 'concat', 'uglify']);
 
   /**
    * Build the docs using YUIdocs.
@@ -298,5 +297,7 @@ module.exports = function(grunt) {
   grunt.registerTask('combine', 'Combine all source into a single, un-minified file.', [
     "concat"
   ]);
+
+  grunt.registerTask('default', ['clean', 'copy', 'concat', 'uglify', 'coreBuild']);
 
 };
